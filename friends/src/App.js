@@ -1,46 +1,30 @@
 import React from 'react';
-import { login, getFriends } from './Actions/actioncreators';
-import { connect } from 'react-redux';
-import { Friends } from './components/Friends'
+import { Redirect } from 'react-router-dom';
+import { Route } from 'react-router-dom';
+import Friends  from './components/Friends';
+import  Login  from './Login/Login';
 
-export class App extends React.Component {
+export const App = () => {
   
-  componentDidMount() {
-    const credentials = {
-      username: 'Lambda School',
-      password: 'i<3Lambd4'
-    }
-    this.props.login(credentials)
-    this.props.getFriends()
-    console.log(this.props.friends)
-  }
-  
-  render() {
-    return (
+  const PrivateRoute = ({ component: Component, ...rest }) => (
+    <Route
+      {...rest}
+      render={props =>
+        localStorage.getItem("token") ? (
+          <Component {...props} />
+        ) : (
+            <Redirect to="/login" />
+          )
+      }
+    />
+  );
+  return (
     <div>
-        { 
-          //  this.props.friends.map(friend => {
-          //     return <Friends friend={friend} />
-            
-          // })
-        }
-    </div>
+        
+        <Route exact path='/login' render={(props) => <Login {...props} />} />
+        <PrivateRoute exact path='/friends' component={Friends} />
+      </div>
     )
 }
-}
-const mapStateToProps = state => {
-  console.log(state)
-  return {
-    
-    loggedIn: state.loggedIn,
-    loggingIn: state.loggingIn,
-    friends: state.friends,
-    gettingFriends: state.gettingFriends
-  };
-}
 
 
-export default connect(
-  mapStateToProps,
-  { login, getFriends },
-)(App)

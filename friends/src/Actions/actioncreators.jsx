@@ -11,12 +11,12 @@ import {
 
 const baseUrl = 'http://localhost:5000/api';
 
-export function login(credentials) {
-    return (dispatch) => {
+export const login = (credentials) => dispatch => {
         dispatch({ type: LOGGING_IN })
         return axios
             .post(`${baseUrl}/login`, credentials)
             .then(res => {
+                console.log('login is firing')
                 localStorage.setItem('token', res.data.payload);
                 dispatch({ type: LOGIN_SUCCESS, payload: res.data })
             })
@@ -24,7 +24,7 @@ export function login(credentials) {
                 dispatch({ type: LOGIN_FAILURE, payload: err })
             })
     }
-}
+
 
 export function getFriends() {
     return (dispatch) => {
