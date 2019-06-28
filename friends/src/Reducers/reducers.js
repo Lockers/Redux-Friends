@@ -3,14 +3,14 @@ import {
     LOGIN_SUCCESS,
     LOGIN_FAILURE,
     GET_FRIENDS,
-    // GET_FRIENDS,
-    // GET_FRIENDS_SUCCESS,
+    GET_FRIENDS_SUCCESS,
+    GET_FRIENDS_FAILURE,
     // GET_FRIENDS_FAILURE
 } from '../Actions/actiontypes';
 
-const initialState = {
+export const initialState = {
     deletingFriend: false,
-    fetchingFriends: false,
+    gettingFriends: false,
     friends: [],
     loggingIn: false,
     loggedIn: false,
@@ -19,13 +19,13 @@ const initialState = {
     error: null
 }
 
-export function friendsReducer(state = initialState, action) {
+export function logInFriendsReducer(state = initialState.loggingIn, action) {
     switch (action.type) {
         case LOGGING_IN:
             return {
                 ...state,
                 loggingIn: true
-            } 
+            }
         case LOGIN_SUCCESS:
             return {
                 ...state,
@@ -36,12 +36,32 @@ export function friendsReducer(state = initialState, action) {
                 ...state,
                 loggingIn: false
             }
+        default: return state
+    }
+}
+        
+export function getFriendsReducer(state = initialState.friends, action) {
+    switch (action.type) {
         case GET_FRIENDS:
             return {
                 ...state,
+                gettingFriends: true
+            }
+        case GET_FRIENDS_SUCCESS:
+            return {
+                ...state,
+                gettingFriends: false,
                 friends: action.payload
+            }
+        case GET_FRIENDS_FAILURE:
+            return {
+                ...state,
+                gettingFriends: false,
+                error: action.payload,
+                
             }
         
         default: return state;
     }
+ 
 }

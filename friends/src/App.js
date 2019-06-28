@@ -12,19 +12,30 @@ export class App extends React.Component {
     }
     this.props.login(credentials)
     this.props.getFriends()
+    console.log(this.props.friends)
   }
   
   render() {
     return (
-      <Friends friends={this.props.friends} />
+    <div>
+        { 
+          //  this.props.friends.map(friend => {
+          //     return <Friends friend={friend} />
+            
+          // })
+        }
+    </div>
     )
-  }
+}
 }
 const mapStateToProps = state => {
+  console.log(state)
   return {
+    
     loggedIn: state.loggedIn,
     loggingIn: state.loggingIn,
-    friends: state.friends
+    friends: state.friends,
+    gettingFriends: state.gettingFriends
   };
 }
 

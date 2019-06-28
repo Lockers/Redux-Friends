@@ -37,7 +37,6 @@ export function getFriends() {
             .get(`${baseUrl}/friends`, axiosConfig)
             .then(res => {
                 dispatch({ type: GET_FRIENDS_SUCCESS, payload: res.data })
-                console.log(res.data)
             })
             .catch(err => {
             dispatch({ type: GET_FRIENDS_FAILURE, payload: err})

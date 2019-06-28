@@ -1,15 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, applyMiddleware, compose } from 'redux';
+import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 // import { BrowserRouter as Router, withRouter } from 'react-router-dom';
-import { friendsReducer } from './Reducers/reducers'
+import { logInFriendsReducer, getFriendsReducer, initialState } from './Reducers/reducers'
 import App from './App';
 
+const combineReducer = combineReducers(
+    { log: logInFriendsReducer, getStuff: getFriendsReducer }
+)
+
 const store = createStore(
-    friendsReducer, 
-    {},
+    combineReducer,
     compose(
         applyMiddleware(thunk),
         window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
